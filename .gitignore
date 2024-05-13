@@ -35,6 +35,9 @@ jspm_packages
 # .env file
 .env
 
+# dist directory
+dist
+
 # Optional npm cache directory
 .npm
 

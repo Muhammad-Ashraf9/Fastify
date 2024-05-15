@@ -26,23 +26,6 @@ Install dependencies:
 npm install
 ```
 
----
-
-### Running the Application
-
-Start the Fastify server:
-
-```bash
-npm run dev
-```
-
-The server will start running on http://localhost:3000.
-
-Access the Swagger documentation:
-
-Visit [Docs](http://localhost:3000/docs) to access the Swagger documentation for the Fastify endpoints.
-
-Join the Postman workspace by following this invite link: [postman](https://app.getpostman.com/join-team?invite_code=a6695057ac76a9235f52c0e3826bdeb1&target_code=ee1e405e709019015be001e221a9e41f)
 
 ---
 
@@ -63,3 +46,21 @@ If you need to apply pending database migrations, run:
 ```bash
 npx prisma migrate dev
 ```
+
+---
+
+### Running the Application
+
+Start the Fastify server:
+
+```bash
+npm run dev
+```
+
+The server will start running on http://localhost:3000.
+
+Access the Swagger documentation:
+
+Visit [Docs](http://localhost:3000/docs) to access the Swagger documentation for the Fastify endpoints.
+
+Join the Postman workspace by following this invite link: [postman](https://app.getpostman.com/join-team?invite_code=a6695057ac76a9235f52c0e3826bdeb1&target_code=ee1e405e709019015be001e221a9e41f)

@@ -31,9 +31,6 @@ async function main() {
     routePrefix: "/docs",
   });
 
-  fastify.get("/ping", async (request, reply) => {
-    return { hello: "world" };
-  });
 
   userSchemas.forEach((schema) => {
     fastify.addSchema(schema);

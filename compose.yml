@@ -1,16 +1,5 @@
 services:
-  fastapi:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: fastapi
-    hostname: fastapi
-    restart: always
-    ports:
-      - "3000:3000"
-    depends_on:
-      - pg-db
-
+ 
   pg-db:
     image: postgres
     restart: always

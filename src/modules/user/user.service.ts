@@ -1,5 +1,5 @@
-import { hashPassword } from "../utils/hash";
-import prisma from "../utils/prisma";
+import { hashPassword } from "../../utils/hash";
+import prisma from "../../utils/prisma";
 import { CreateUserInput } from "./user.schema";
 
 export async function createUser(input: CreateUserInput) {
@@ -31,7 +31,6 @@ export async function getUserById(id: string) {
   return user;
 }
 
-
 export async function updateUser(id: string, input: CreateUserInput) {
   const { password, ...rest } = input;
   const hashedPassword = await hashPassword(password);
@@ -58,5 +57,3 @@ export async function deleteUser(id: string) {
 
   return user;
 }
-
-

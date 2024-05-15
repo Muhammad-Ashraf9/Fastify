@@ -1,4 +1,16 @@
 services:
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fastapi
+    hostname: fastapi
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - pg-db
+
   pg-db:
     image: postgres
     restart: always
@@ -9,7 +21,7 @@ services:
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ashPassword} # the username is postgres
     volumes:
-      - ./databases:/usr/databases
+      - postgres-data:/var/lib/postgresql/data
 
   pgadmin:
     image: dpage/pgadmin4
@@ -23,3 +35,6 @@ services:
     restart: always
     ports:
       - "5050:80"
+
+volumes:
+  postgres-data:

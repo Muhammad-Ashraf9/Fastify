@@ -1,6 +1,12 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { CreateUserInput } from "./user.schema";
-import { createUser, deleteUser, getUserById, getUsers, updateUser } from "./user.service";
+import {
+  createUser,
+  deleteUser,
+  getUserById,
+  getUsers,
+  updateUser,
+} from "./user.service";
 import exp from "constants";
 
 export async function registerUserHandler(

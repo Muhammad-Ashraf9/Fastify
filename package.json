@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p .",
     "start": "node dist/app.js",
     "test": "node --test test/**/*.test.ts",
     "dev": "nodemon src/app.ts"

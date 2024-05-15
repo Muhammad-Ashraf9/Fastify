@@ -1,28 +1,46 @@
-import fastify from "fastify";
+import Fastify from "fastify";
+import { WebSocketServer } from "ws";
 
 import "dotenv/config";
 
-import userRoutes from "./modules/user.route";
-import { userSchemas } from "./modules/user.schema";
+import userRoutes from "./modules/user/user.route";
+import { userSchemas } from "./modules/user/user.schema";
 import { swaggerOptions } from "./utils/swagger";
 
 const port = process.env.PORT || 3000;
 
-const server = fastify({ logger: true });
+const fastify = Fastify({ logger: true });
+
+const wss = new WebSocketServer({ server: fastify.server });
+wss.on("connection", function connection(ws) {
+  ws.on("error", console.error);
+
+  ws.on("message", function message(data) {
+    console.log("received: %s", data);
+    ws.send(data + " from server");
+  });
+  ws.emit("message", "something");
+
+  ws.send("something");
+});
 
 async function main() {
-  await server.register(import("@fastify/swagger"), swaggerOptions);
+  await fastify.register(import("@fastify/swagger"), swaggerOptions);
 
-  server.register(import("@fastify/swagger-ui"), {
+  fastify.register(import("@fastify/swagger-ui"), {
     routePrefix: "/docs",
   });
 
-  userSchemas.forEach((schema) => {
-    server.addSchema(schema);
+  fastify.get("/ping", async (request, reply) => {
+    return { hello: "world" };
   });
-  server.register(userRoutes, { prefix: "api/v1/users" });
+
+  userSchemas.forEach((schema) => {
+    fastify.addSchema(schema);
+  });
+  fastify.register(userRoutes, { prefix: "api/v1/users" });
   try {
-    const address = await server.listen({ port: +port, host: "0.0.0.0" });
+    const address = await fastify.listen({ port: +port, host: "0.0.0.0" });
     console.log(`Server listening at ${address}`);
   } catch (error) {
     if (error) {

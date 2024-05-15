@@ -1,15 +1,34 @@
 import fastify from "fastify";
 
-const server = fastify();
+import "dotenv/config";
 
-server.get("/ping", async (request, reply) => {
-  return "pong\n";
-});
+import userRoutes from "./modules/user.route";
+import { userSchemas } from "./modules/user.schema";
+import { swaggerOptions } from "./utils/swagger";
 
-server.listen({ port: 8080 }, (err, address) => {
-  if (err) {
-    console.error(err);
-    process.exit(1);
+const port = process.env.PORT || 3000;
+
+const server = fastify({ logger: true });
+
+async function main() {
+  await server.register(import("@fastify/swagger"), swaggerOptions);
+
+  server.register(import("@fastify/swagger-ui"), {
+    routePrefix: "/docs",
+  });
+
+  userSchemas.forEach((schema) => {
+    server.addSchema(schema);
+  });
+  server.register(userRoutes, { prefix: "api/v1/users" });
+  try {
+    const address = await server.listen({ port: +port, host: "0.0.0.0" });
+    console.log(`Server listening at ${address}`);
+  } catch (error) {
+    if (error) {
+      console.error(error);
+      process.exit(1);
+    }
   }
-  console.log(`Server listening at ${address}`);
-});
+}
+main();
